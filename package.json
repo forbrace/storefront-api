@@ -6,8 +6,10 @@
   "scripts": {
     "build": "npx tsc  --outDir ./dist",
     "start": "nodemon src/server.ts",
+    "start-dist": "nodemon dist/server.js",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess 'node ./dist/server.js'",
     "test": "export NODE_ENV=test && db-migrate db:create storefront_test && db-migrate --env test up && jasmine-ts && db-migrate db:drop storefront_test",
+    "test-dist": "yarn build && export NODE_ENV=test && db-migrate db:create storefront_test && db-migrate --env test up && jasmine-ts && db-migrate db:drop storefront_test",
     "tsc": "tsc",
     "prettier-ts": "prettier --config .prettierrc  'src/**/*.ts' --write",
     "prettier-js": "prettier --config .prettierrc  'dist/**/*.js' --write",
