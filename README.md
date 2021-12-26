@@ -31,7 +31,7 @@ GRANT ALL PRIVILEGES ON DATABASE storefront_dev TO storefront_user;
 3. Install the global package `npm install -g db-migrate`
 4. Install the package to the project `yarn add db-migrate db-migrate-pg`
 5. Bring the migration up `db-migrate up`
-6. Run `yarn watch` or `yarn start` for local development, `yarn build` to build the production bundle.
+6. Run `yarn watch` for local development, `yarn build` to build the production bundle.
 7. URL `http://0.0.0.0:3000`
 
 ## Testing
