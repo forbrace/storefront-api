@@ -11,7 +11,8 @@
 ## Getting Started
 1. Install all dependencies with `yarn install` or `npm install`.
 2. Create `.env` file with the following content
-```POSTGRES_HOST=127.0.0.1
+```
+POSTGRES_HOST=127.0.0.1
 POSTGRES_DB=storefront_dev
 POSTGRES_TEST_DB=storefront_test
 POSTGRES_USER=storefront_user
