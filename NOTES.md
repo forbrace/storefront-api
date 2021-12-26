@@ -90,3 +90,10 @@ Run Jasmine initialization to get test structure `jasmine init`
 8. Bring the migration down `db-migrate down`
 
 This repo contains a basic Node and Express app to get you started in constructing an API. To get started, clone this repo and run `yarn` in your terminal at the project root.
+
+Resources:
+
+[Advance Concepts for deep knowldge](https://www.infoworld.com/article/3196070/10-javascript-concepts-every-nodejs-developer-must-master.html) - This is a blog to guide you about more advanced concepts in Node JS that you should know.
+[Security Best Practices](https://blog.sqreen.com/nodejs-security-best-practices/) - This link will help you understand the security best practices.
+[SQL Basic Interview Question](https://www.guru99.com/sql-interview-questions-answers.html) - This link will help you prepare for SQL interviews.
+[SQL Advance Interview Question](https://www.educba.com/advance-sql-interview-questions/) - This link will also help you prepare for SQL interviews of intermediate level.

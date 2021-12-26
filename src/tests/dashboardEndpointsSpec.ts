@@ -35,7 +35,7 @@ describe('Test endpoint response.', () => {
   // Top 5 most popular products
   it('/products/five-most-popular GET endpoint', (done) => {
     request
-      .get('/orders')
+      .get('/products/five-most-popular')
       .expect(200)
       .end(function (err, _res) {
         if (err) {
