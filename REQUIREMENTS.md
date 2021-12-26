@@ -3,44 +3,108 @@
 
 ## API Endpoints
 #### Products
-- Index `[GET] /products`
-- Show (args: product id) `[GET] /products/:id`
-- Create (args: Product)[token required] `[POST] /products`
-- Top 5 most popular products `[GET] /products/five-most-popular`
-- Products by category (args: product category) `[GET] /products/:category`
+| Endpoint | Description |
+|---|---|
+| `[GET] /products` | Index | 
+| `[GET] /products/:id` | Show (args: product id) |
+| `[POST] /products` | Create (args: Product)[token required] | 
+| `[GET] /products/five-most-popular`| Top 5 most popular products |
+| `[GET] /products/:category`| Products by category (args: product category) |
 
 #### Users
-- Index [token required] `[GET] /users`
-- Show (args: user id) [token required] `[GET] /users/:id`
-- Create (args: User)[token required] `[POST] /users`
-- Delete (args: user id)[token required] `[DELETE] /users/:id`
+| Endpoint | Description |
+|---|---|
+| `[GET] /users` | Index [token required] | 
+| `[GET] /users/:id` | Show (args: user id) [token required] | 
+| `[POST] /users` | Create (args: User)[token required] | 
+| `[DELETE] /users/:id` | Delete (args: user id)[token required] |
 
 #### Orders
-- Current Order by user (args: user id)[token required] `[GET] /orders/user/:id/active`
-- Completed Orders by user (args: user id)[token required] `[GET] /orders/user/:id/complete`
+| Endpoint | Description |
+|---|---|
+| `[GET] /orders/user/:id/active` | Current Order by user (args: user id)[token required] |
+| `[GET] /orders/user/:id/complete` | Completed Orders by user (args: user id)[token required] |
 
 ## Data Shapes
 #### Product
-- id
-- name
-- price
-- category
+```
+id SERIAL PRIMARY KEY,
+name VARCHAR(64) NOT NULL,
+price integer NOT NULL,
+category VARCHAR(64) NOT NULL
+```
+```
+  Column  |         Type          | Collation | Nullable |               Default                
+----------+-----------------------+-----------+----------+--------------------------------------
+ id       | integer               |           | not null | nextval('products_id_seq'::regclass)
+ name     | character varying(64) |           | not null | 
+ price    | integer               |           | not null | 
+ category | character varying(64) |           | not null | 
+Indexes:
+    "products_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+```
 
 #### User
-- id
-- first_name
-- last_name
-- username
-- password
+```
+id SERIAL PRIMARY KEY,
+first_name VARCHAR(100),
+last_name VARCHAR(100),
+username VARCHAR(50),
+password_digest VARCHAR
+```
+```
+     Column      |          Type          | Collation | Nullable |              Default              
+-----------------+------------------------+-----------+----------+-----------------------------------
+ id              | integer                |           | not null | nextval('users_id_seq'::regclass)
+ first_name      | character varying(100) |           |          | 
+ last_name       | character varying(100) |           |          | 
+ username        | character varying(50)  |           |          | 
+ password_digest | character varying      |           |          | 
+Indexes:
+    "users_pkey" PRIMARY KEY, btree (id)
+Referenced by:
+    TABLE "orders" CONSTRAINT "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+```
 
 #### Orders
-- id
-- status of order (active or complete)
-- user_id
+```
+id SERIAL PRIMARY KEY,
+status VARCHAR(15),
+user_id bigint REFERENCES users(id)
+```
+```
+ Column  |         Type          | Collation | Nullable |              Default               
+---------+-----------------------+-----------+----------+------------------------------------
+ id      | integer               |           | not null | nextval('orders_id_seq'::regclass)
+ status  | character varying(15) |           |          | 
+ user_id | bigint                |           |          | 
+Indexes:
+    "orders_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "orders_user_id_fkey" FOREIGN KEY (user_id) REFERENCES users(id)
+Referenced by:
+    TABLE "order_products" CONSTRAINT "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+```
 
 #### Order Products
-- id
-- quantity
-- order_id
-- product_id
-
+```
+id SERIAL PRIMARY KEY,
+quantity integer,
+order_id bigint REFERENCES orders(id),
+product_id bigint REFERENCES products(id)
+```
+```
+   Column   |  Type   | Collation | Nullable |                  Default                   
+------------+---------+-----------+----------+--------------------------------------------
+ id         | integer |           | not null | nextval('order_products_id_seq'::regclass)
+ quantity   | integer |           |          | 
+ order_id   | bigint  |           |          | 
+ product_id | bigint  |           |          | 
+Indexes:
+    "order_products_pkey" PRIMARY KEY, btree (id)
+Foreign-key constraints:
+    "order_products_order_id_fkey" FOREIGN KEY (order_id) REFERENCES orders(id)
+    "order_products_product_id_fkey" FOREIGN KEY (product_id) REFERENCES products(id)
+```
